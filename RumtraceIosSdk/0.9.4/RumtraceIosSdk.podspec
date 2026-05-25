@@ -1,0 +1,43 @@
+Pod::Spec.new do |spec|
+  spec.name         = "RumtraceIosSdk"
+  spec.version      = "0.9.4"
+  spec.summary      = "Rumtrace iOS SDK for Real User Monitoring"
+  spec.description  = "A comprehensive iOS SDK for real user monitoring, crash reporting, and performance tracking."
+  spec.homepage     = "https://github.com/rumtracehq/rumtrace-ios-sdk"
+  spec.license      = "Apache-2.0"
+  spec.author       = { "Rumtrace" => "team@rumtrace.com" }
+  spec.documentation_url = "https://docs.rumtrace.com"
+
+  spec.swift_version = "5.10"
+  spec.ios.deployment_target = "16.0"
+  # Limit to iOS only to avoid incompatible transitive pods on other platforms
+
+  spec.pod_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386'
+  }
+  spec.user_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386'
+  }
+  
+  spec.source           = { :git => "https://github.com/rumtracehq/rumtrace-ios-sdk.git", :tag => spec.version.to_s }
+  spec.source_files = "Sources/rumtrace-ios-sdk/**/*.{swift,h,m}"
+  spec.preserve_paths = ["README.md"]
+  spec.resource_bundles = {
+    'RumtraceIosSdk' => ['Sources/rumtrace-ios-sdk/Resources/**/*']
+  }
+  spec.requires_arc = true
+  spec.static_framework = true
+
+  # OpenTelemetry dependencies
+  spec.dependency "OpenTelemetry-Swift-Sdk", "~> 2.3.0"
+  spec.dependency "OpenTelemetry-Swift-SdkResourceExtension", "~> 2.3.0"
+  spec.dependency "OpenTelemetry-Swift-PersistenceExporter", "~> 2.3.0"
+  spec.dependency "OpenTelemetry-Swift-Instrumentation-URLSession", "~> 2.3.0"
+  spec.dependency "OpenTelemetry-Swift-Protocol-Exporter-Http", "~> 2.3.0"
+  spec.dependency "OpenTelemetry-Swift-Instrumentation-NetworkStatus", "~> 2.3.0"
+  # spec.dependency "OpenTelemetry-Swift-BaggagePropagationProcessor", "~> 2.1.0"
+
+  # Other dependencies
+  spec.dependency 'Kronos', '>= 4.3.0', '< 5.0'
+  spec.dependency 'PLCrashReporter', '>= 1.12.0', '< 2.0'
+end
